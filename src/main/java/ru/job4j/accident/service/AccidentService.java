@@ -16,7 +16,6 @@ public class AccidentService {
     }
 
     public List<Accident> getAccidents() {
-        accidentStorage.init();
-        return accidentStorage.getAccidents().values().stream().toList();
+        return accidentStorage.getAccidents().stream().toList();
     }
 }

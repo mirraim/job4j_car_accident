@@ -4,8 +4,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import ru.job4j.accident.model.Accident;
 import ru.job4j.accident.repository.AccidentMem;
 
@@ -22,10 +22,10 @@ public class AccidentControl {
         return "/accident/create";
     }
 
-    @GetMapping("/edit/{id}")
-    public String edit(@PathVariable("id") int id, Model model) {
+    @GetMapping("/update")
+    public String edit(@RequestParam("id") int id, Model model) {
         model.addAttribute("accident", accidents.getById(id));
-        return "/accident/edit";
+        return "/accident/update";
     }
 
     @PostMapping("/save")

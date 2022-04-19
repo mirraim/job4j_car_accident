@@ -43,7 +43,7 @@
                 <span th:text="${accident.text}"></span>
             </td>
             <td>
-                <a class="btn btn-secondary" th:href="@{/edit/{id}(id=${accident.id})}">Изменить</a>
+                <a class="btn btn-secondary" th:href="@{/update(id=${accident.id})}">Изменить</a>
             </td>
         </tr>
     </div>

@@ -3,7 +3,7 @@ package ru.job4j.accident.repository;
 import org.springframework.stereotype.Repository;
 import ru.job4j.accident.model.AccidentType;
 
-import java.util.List;
+import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -17,8 +17,8 @@ public class AccidentTypeMem {
         accidentTypes.put(3, AccidentType.of(3, "Машина и велосипед"));
     }
 
-    public List<AccidentType> getAccidentTypes() {
-        return accidentTypes.values().stream().toList();
+    public Collection<AccidentType> getAccidentTypes() {
+        return accidentTypes.values();
     }
 
     public AccidentType get(int id) {

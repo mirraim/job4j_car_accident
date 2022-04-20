@@ -33,6 +33,18 @@
             </td>
         </tr>
         <tr>
+            <td>Статьи</td>
+            <td>
+                <select class="form-select" name="rIds" multiple>
+                    <div th:each="rule : ${rules}">
+                        <option th:value="${rule.id}">
+                            <span th:text="${rule.name}"></span>
+                        </option>
+                    </div>
+                </select>
+            </td>
+        </tr>
+        <tr>
             <td colspan='2'><input name="submit" type="submit" value="Сохранить" /></td>
         </tr>
     </table>

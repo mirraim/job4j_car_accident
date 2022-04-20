@@ -8,6 +8,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import ru.job4j.accident.model.Accident;
 import ru.job4j.accident.model.AccidentType;
 import ru.job4j.accident.repository.AccidentMem;
+import ru.job4j.accident.repository.AccidentTypeMem;
 
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -18,24 +19,33 @@ class AccidentServiceTest {
     @Mock
     private AccidentMem accidentStorage;
 
+    @Mock
+    private AccidentTypeMem types;
+
     @InjectMocks
     private AccidentService accidentService;
 
     @Test
     void whenId0ThenCallCreateMethod() {
-        Accident accident = new Accident("accident1",  AccidentType.of(1, "type1"));
-        when(accidentService.save(accident)).thenReturn(null);
+        AccidentType type = AccidentType.of(1, "type1");
+        Accident accident = new Accident("accident1",  type);
+        when(types.get(1)).thenReturn(type);
+        when(accidentStorage.create(accident)).thenReturn(null);
+
+        accidentService.save(accident);
 
         verify(accidentStorage).create(accident);
     }
 
     @Test
-    void whenIdNon0ThenCallSaveMethod() {
-        Accident accident = new Accident("accident1",  AccidentType.of(1, "type1"));
-        when(accidentService.save(accident)).thenReturn(null);
+    void whenIdNon0ThenCallUpdateMethod() {
+        AccidentType type = AccidentType.of(1, "type1");
+        Accident accident = new Accident(1, "accident1",  type);
+        when(types.get(1)).thenReturn(type);
+        when(accidentStorage.update(accident)).thenReturn(null);
 
         accidentService.save(accident);
 
-        verify(accidentStorage).save(accident);
+        verify(accidentStorage).update(accident);
     }
 }

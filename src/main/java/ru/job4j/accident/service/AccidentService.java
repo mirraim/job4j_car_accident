@@ -18,4 +18,16 @@ public class AccidentService {
     public List<Accident> getAccidents() {
         return accidentStorage.getAccidents().stream().toList();
     }
+
+    public Accident getById(int id) {
+        return accidentStorage.getById(id);
+    }
+
+    public Accident save(Accident accident) {
+        if (accident.getId() == 0) {
+            return accidentStorage.create(accident);
+        } else {
+            return accidentStorage.save(accident);
+        }
+    }
 }

@@ -33,12 +33,12 @@ class AccidentMemTest {
     }
 
     @Test
-    void whenCreateExistingAccidentThenStorageSizeSame() {
+    void whenUpdateAccidentThenAccidentUpdates() {
         int firstId = accidentStorage.create(
                 new Accident("YH149O", "address", "description")).getId();
         int size = accidentStorage.getAccidents().size();
-        accidentStorage.create(new Accident(firstId, "AA111A", "new address", "new description"));
-        assertEquals(size, accidentStorage.getAccidents().size());
+        accidentStorage.save(new Accident(firstId, "AA111A", "new address", "new description"));
+        assertEquals("AA111A", accidentStorage.getById(firstId).getName());
     }
 
     @Test

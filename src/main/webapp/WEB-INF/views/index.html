@@ -38,6 +38,13 @@
                 <span th:text="${accident.type.name}"></span>
             </td>
             <td>
+                <ul class="list-group" th:each="rule : ${accident.rules}">
+                    <li>
+                        <span th:text="${rule.name}"></span>
+                    </li>
+                </ul>
+            </td>
+            <td>
                 <a class="btn btn-secondary" th:href="@{/update(id=${accident.id})}">Изменить</a>
             </td>
         </tr>

@@ -27,12 +27,24 @@
                 <td>Тип</td>
                 <td>
                     <select class="form-select" name="type.id">
-                        <option>
+                        <option th:value="${accident.type.id}">
                             <span th:text="${accident.type.name}"></span>
                         </option>
                         <div th:each="type : ${types}">
                             <option th:value="${type.id}">
                                 <span th:text="${type.name}"></span>
+                            </option>
+                        </div>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Статьи</td>
+                <td>
+                    <select class="form-select" name="rIds" multiple>
+                        <div th:each="rule : ${rules}">
+                            <option th:value="${rule.id}">
+                                <span th:text="${rule.name}"></span>
                             </option>
                         </div>
                     </select>

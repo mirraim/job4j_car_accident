@@ -1,6 +1,7 @@
 package ru.job4j.accident.model;
 
 import java.util.Objects;
+import java.util.Set;
 
 public class Accident {
 
@@ -8,15 +9,19 @@ public class Accident {
     private String name;
     private AccidentType type;
 
-    public Accident(int id, String name, AccidentType accidentType) {
+    private Set<Rule> rules;
+
+    public Accident(int id, String name, AccidentType accidentType, Set<Rule> rules) {
         this.id = id;
         this.name = name;
         this.type = accidentType;
+        this.rules = rules;
     }
 
-    public Accident(String name, AccidentType accidentType) {
+    public Accident(String name, AccidentType accidentType, Set<Rule> rules) {
         this.name = name;
         this.type = accidentType;
+        this.rules = rules;
     }
 
     public Accident() {
@@ -46,6 +51,14 @@ public class Accident {
         this.type = type;
     }
 
+    public Set<Rule> getRules() {
+        return rules;
+    }
+
+    public void setRules(Set<Rule> rules) {
+        this.rules = rules;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -57,11 +70,12 @@ public class Accident {
         Accident accident = (Accident) o;
         return id == accident.id
                 && Objects.equals(name, accident.name)
-                && Objects.equals(type, accident.type);
+                && Objects.equals(type, accident.type)
+                && Objects.equals(rules, accident.rules);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, type);
+        return Objects.hash(id, name, type, rules);
     }
 }

@@ -9,7 +9,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @Repository
 public class RuleMem {
-    Map<Integer, Rule> rules = new ConcurrentHashMap<>();
+    private final Map<Integer, Rule> rules = new ConcurrentHashMap<>();
 
     public RuleMem() {
         rules.put(1, Rule.of(1, "Статья. 1"));

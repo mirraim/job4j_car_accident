@@ -12,15 +12,14 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class AccidentMem {
     private final Map<Integer, Accident> accidents = new ConcurrentHashMap<>();
 
-    private AtomicInteger lastId;
+    private AtomicInteger lastId = new AtomicInteger(2);
 
     public AccidentMem() {
-        lastId = new AtomicInteger(0);
-        accidents.put(lastId.incrementAndGet(), new Accident(
-                lastId.get(), "TY405U", "Превышение скорости", "Липатова, 15"
+        accidents.put(1, new Accident(
+                1, "TY405U", "Превышение скорости", "Липатова, 15"
         ));
-        accidents.put(lastId.incrementAndGet(), new Accident(
-                lastId.get(), "МА862О", "Пересечение сплошной", "Мира, 95"
+        accidents.put(2, new Accident(
+                2, "МА862О", "Пересечение сплошной", "Мира, 95"
         ));
     }
 
@@ -29,13 +28,13 @@ public class AccidentMem {
     }
 
     public Accident create(Accident accident) {
-        int id = accident.getId();
-        if (!accidents.containsKey(id)) {
-            id = lastId.incrementAndGet();
-            accident.setId(id);
-        }
-        accidents.put(id, accident);
+        accident.setId(lastId.incrementAndGet());
+        accidents.putIfAbsent(lastId.get(), accident);
         return accident;
+    }
+
+    public Accident save(Accident accident) {
+        return accidents.replace(accident.getId(), accident);
     }
 
     public Accident getById(int id) {

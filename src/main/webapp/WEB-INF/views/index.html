@@ -21,10 +21,8 @@
     <thead>
     <tr>
         <th scope="col">id</th>
-        <th scope="col">Номер машины</th>
-        <th scope="col">Адрес</th>
-        <th scope="col">Описание нарушения</th>
-        <th scope="col"></th>
+        <th scope="col">Название</th>
+        <th scope="col">Тип</th>
     </tr>
     </thead>
     <tbody>
@@ -37,10 +35,7 @@
                 <span th:text="${accident.name}"></span>
             </td>
             <td>
-                <span th:text="${accident.address}"></span>
-            </td>
-            <td>
-                <span th:text="${accident.text}"></span>
+                <span th:text="${accident.type.name}"></span>
             </td>
             <td>
                 <a class="btn btn-secondary" th:href="@{/update(id=${accident.id})}">Изменить</a>

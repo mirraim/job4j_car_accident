@@ -20,16 +20,23 @@
                 <td><input type='text' name='id' th:value="${accident.id}"></td>
             </tr>
             <tr>
-                <td>Номер машины:</td>
+                <td>Название</td>
                 <td><input type='text' name='name' th:value="${accident.name}"></td>
             </tr>
             <tr>
-                <td>Адрес:</td>
-                <td><input type='text' name='address' th:value="${accident.address}"></td>
-            </tr>
-            <tr>
-                <td>Описание нарушения:</td>
-                <td><input type='text' name='text' th:value="${accident.text}"></td>
+                <td>Тип</td>
+                <td>
+                    <select class="form-select" name="type.id">
+                        <option>
+                            <span th:text="${accident.type.name}"></span>
+                        </option>
+                        <div th:each="type : ${types}">
+                            <option th:value="${type.id}">
+                                <span th:text="${type.name}"></span>
+                            </option>
+                        </div>
+                    </select>
+                </td>
             </tr>
             <tr>
                 <td colspan='2'><input name="submit" type="submit" value="Сохранить" /></td>

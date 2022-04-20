@@ -16,16 +16,21 @@
 <form  th:action="@{/save}" method='POST'>
     <table>
         <tr>
-            <td>Номер машины:</td>
+            <td>Название</td>
             <td><input type='text' name='name'></td>
         </tr>
         <tr>
-            <td>Адрес:</td>
-            <td><input type='text' name='address'></td>
-        </tr>
-        <tr>
-            <td>Описание нарушения:</td>
-            <td><input type='text' name='text'></td>
+            <td>Тип</td>
+            <td>
+                <select class="form-select" name="type.id">
+                    <option></option>
+                    <div th:each="type : ${types}">
+                    <option th:value="${type.id}">
+                        <span th:text="${type.name}"></span>
+                    </option>
+                    </div>
+                </select>
+            </td>
         </tr>
         <tr>
             <td colspan='2'><input name="submit" type="submit" value="Сохранить" /></td>

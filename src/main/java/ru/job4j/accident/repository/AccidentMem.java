@@ -12,14 +12,17 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class AccidentMem {
     private final Map<Integer, Accident> accidents = new ConcurrentHashMap<>();
 
+    private final AccidentTypeMem accidentTypes;
+
     private AtomicInteger lastId = new AtomicInteger(2);
 
-    public AccidentMem() {
+    public AccidentMem(AccidentTypeMem accidentTypes) {
+        this.accidentTypes = accidentTypes;
         accidents.put(1, new Accident(
-                1, "TY405U", "Превышение скорости", "Липатова, 15"
+                1, "Сбит пешеход", accidentTypes.get(2)
         ));
         accidents.put(2, new Accident(
-                2, "МА862О", "Пересечение сплошной", "Мира, 95"
+                2, "Две машины улетели в кювет", accidentTypes.get(1)
         ));
     }
 
@@ -29,12 +32,12 @@ public class AccidentMem {
 
     public Accident create(Accident accident) {
         accident.setId(lastId.incrementAndGet());
-        accidents.putIfAbsent(lastId.get(), accident);
+        accidents.putIfAbsent(lastId.get(), replaceType(accident));
         return accident;
     }
 
     public Accident save(Accident accident) {
-        return accidents.replace(accident.getId(), accident);
+        return accidents.replace(accident.getId(), replaceType(accident));
     }
 
     public Accident getById(int id) {
@@ -42,5 +45,11 @@ public class AccidentMem {
             return accidents.get(id);
         }
         throw new IllegalArgumentException("Происшествие не существует");
+    }
+
+    private Accident replaceType(Accident accident) {
+        int typeId = accident.getType().getId();
+        accident.setType(accidentTypes.get(typeId));
+        return accident;
     }
 }

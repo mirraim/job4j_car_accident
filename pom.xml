@@ -65,6 +65,25 @@
       <version>3.0.15.RELEASE</version>
     </dependency>
 
+    <!--JDBC-->
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-jdbc</artifactId>
+      <version>${spring.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.postgresql</groupId>
+      <artifactId>postgresql</artifactId>
+      <version>42.3.3</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-dbcp2</artifactId>
+      <version>2.7.0</version>
+    </dependency>
+
     <!--Test-->
     <dependency>
       <groupId>org.junit.jupiter</groupId>

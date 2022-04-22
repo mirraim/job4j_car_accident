@@ -8,9 +8,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import ru.job4j.accident.model.Accident;
 import ru.job4j.accident.model.AccidentType;
 import ru.job4j.accident.model.Rule;
-import ru.job4j.accident.repository.AccidentMem;
-import ru.job4j.accident.repository.AccidentTypeMem;
-import ru.job4j.accident.repository.RuleMem;
+import ru.job4j.accident.repository.mem.AccidentMem;
+import ru.job4j.accident.repository.mem.AccidentTypeMem;
+import ru.job4j.accident.repository.mem.RuleMem;
 
 import java.util.Set;
 
@@ -36,7 +36,7 @@ class AccidentServiceTest {
         AccidentType type = AccidentType.of(1, "type1");
         Rule rule = Rule.of(1, "Статья 1");
         Accident accident = new Accident("accident1",  type, Set.of(rule));
-        when(types.get(1)).thenReturn(type);
+        when(types.getType(1)).thenReturn(type);
         when(rules.getRule(any())).thenReturn(rule);
         when(accidentStorage.create(accident)).thenReturn(null);
 
@@ -50,7 +50,7 @@ class AccidentServiceTest {
         AccidentType type = AccidentType.of(1, "type1");
         Rule rule = Rule.of(1, "Статья 1");
         Accident accident = new Accident(1, "accident1",  type, Set.of(rule));
-        when(types.get(1)).thenReturn(type);
+        when(types.getType(1)).thenReturn(type);
         when(rules.getRule(any())).thenReturn(rule);
         when(accidentStorage.update(accident)).thenReturn(null);
 

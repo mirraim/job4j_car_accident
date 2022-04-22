@@ -1,9 +1,10 @@
-package ru.job4j.accident.repository;
+package ru.job4j.accident.repository.mem;
 
 import org.springframework.stereotype.Repository;
 import ru.job4j.accident.model.Accident;
 import ru.job4j.accident.model.AccidentType;
 import ru.job4j.accident.model.Rule;
+import ru.job4j.accident.repository.AccidentRepository;
 
 import java.util.Collection;
 import java.util.Map;
@@ -12,7 +13,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Repository
-public class AccidentMem {
+public class AccidentMem implements AccidentRepository {
     private final Map<Integer, Accident> accidents = new ConcurrentHashMap<>();
     private AtomicInteger lastId = new AtomicInteger(2);
 
@@ -25,20 +26,24 @@ public class AccidentMem {
         ));
     }
 
+    @Override
     public Collection<Accident> getAccidents() {
         return accidents.values();
     }
 
+    @Override
     public Accident create(Accident accident) {
         accident.setId(lastId.incrementAndGet());
         accidents.putIfAbsent(lastId.get(), accident);
         return accident;
     }
 
+    @Override
     public Accident update(Accident accident) {
         return accidents.replace(accident.getId(), accident);
     }
 
+    @Override
     public Accident getById(int id) {
         if (accidents.containsKey(id)) {
             return accidents.get(id);

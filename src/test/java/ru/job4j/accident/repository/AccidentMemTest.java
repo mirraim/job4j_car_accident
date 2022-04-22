@@ -7,6 +7,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import ru.job4j.accident.model.Accident;
 import ru.job4j.accident.model.AccidentType;
 import ru.job4j.accident.model.Rule;
+import ru.job4j.accident.repository.mem.AccidentMem;
 
 import java.util.Set;
 

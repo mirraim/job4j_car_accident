@@ -1,11 +1,20 @@
 package ru.job4j.accident.model;
 
-import java.util.Objects;
+import javax.persistence.*;
 
+import java.util.Objects;
+import java.util.Set;
+
+@Entity
+@Table(name = "rules")
 public class Rule {
 
+    @Id
     private int id;
     private String name;
+
+    @ManyToMany(mappedBy = "rules", fetch = FetchType.EAGER)
+    private Set<Accident> accidents;
 
     public static Rule of(int id, String name) {
         Rule rule = new Rule();
@@ -28,6 +37,14 @@ public class Rule {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Set<Accident> getAccidents() {
+        return accidents;
+    }
+
+    public void setAccidents(Set<Accident> accidents) {
+        this.accidents = accidents;
     }
 
     @Override

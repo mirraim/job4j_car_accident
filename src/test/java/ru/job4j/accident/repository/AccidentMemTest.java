@@ -9,8 +9,6 @@ import ru.job4j.accident.model.AccidentType;
 import ru.job4j.accident.model.Rule;
 import ru.job4j.accident.repository.mem.AccidentMem;
 
-import java.util.Set;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -21,7 +19,8 @@ class AccidentMemTest {
 
     @Test
     void whenCreateAccidentThenStorageSizeIncrement() {
-        Accident accident = new Accident("accident1",  AccidentType.of(1, "type1"), Set.of(Rule.of(1, "Статья 1")));
+        Accident accident = Accident.of("accident1",  AccidentType.of(1, "type1"));
+        accident.getRules().add(Rule.of(1, "Статья 1"));
         int size = accidentStorage.getAccidents().size();
         accidentStorage.create(accident);
         assertEquals(size + 1, accidentStorage.getAccidents().size());
@@ -29,20 +28,23 @@ class AccidentMemTest {
 
     @Test
     void whenCreateAccidentThenIdIncrement() {
-        int firstId = accidentStorage.create(
-                new Accident("accident1",  AccidentType.of(1, "type1"), Set.of(Rule.of(1, "Статья 1")))).getId();
-        int secondId = accidentStorage.create(
-                new Accident("accident2",  AccidentType.of(2, "type2"), Set.of(Rule.of(1, "Статья 1")))).getId();
+        Accident accident1 = Accident.of("accident1",  AccidentType.of(1, "type1"));
+        accident1.getRules().add(Rule.of(1, "Статья 1"));
+        int firstId = accidentStorage.create(accident1).getId();
+        Accident accident2 = Accident.of("accident2",  AccidentType.of(2, "type2"));
+        accident2.getRules().add(Rule.of(1, "Статья 1"));
+        int secondId = accidentStorage.create(accident2).getId();
         assertEquals(firstId + 1, secondId);
     }
 
     @Test
     void whenUpdateAccidentThenAccidentUpdates() {
-        int firstId = accidentStorage.create(
-                new Accident("accident1", AccidentType.of(1, "type1"), Set.of(Rule.of(1, "Статья 1")))).getId();
-        accidentStorage.update(new Accident(
-                firstId, "accident2",  AccidentType.of(2, "type2"), Set.of(Rule.of(1, "Статья 1"))
-        ));
+        Accident accident1 = Accident.of("accident1",  AccidentType.of(1, "type1"));
+        accident1.getRules().add(Rule.of(1, "Статья 1"));
+        int firstId = accidentStorage.create(accident1).getId();
+        Accident accident2 = Accident.of(firstId, "accident2",  AccidentType.of(2, "type2"));
+        accident2.getRules().add(Rule.of(1, "Статья 1"));
+        accidentStorage.update(accident2);
         assertEquals("accident2", accidentStorage.getById(firstId).getName());
     }
 

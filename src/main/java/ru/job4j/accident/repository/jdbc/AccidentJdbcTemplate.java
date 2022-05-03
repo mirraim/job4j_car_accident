@@ -1,6 +1,5 @@
 package ru.job4j.accident.repository.jdbc;
 
-import org.springframework.context.annotation.Primary;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
@@ -16,7 +15,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Repository
-@Primary
 public class AccidentJdbcTemplate implements AccidentRepository {
     private final JdbcTemplate jdbc;
 

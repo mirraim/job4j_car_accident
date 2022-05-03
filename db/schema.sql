@@ -1,3 +1,10 @@
+drop table accident_rules;
+drop table accident;
+drop table rules;
+drop table types;
+
+
+
 CREATE TABLE types (
    id serial primary key,
    name varchar(225)
@@ -17,7 +24,6 @@ CREATE TABLE rules (
 );
 
 CREATE TABLE accident_rules (
-    id serial primary key,
     accident_id int references accident(id),
     rule_id int references rules(id)
 );

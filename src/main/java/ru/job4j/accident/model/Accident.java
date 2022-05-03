@@ -1,30 +1,41 @@
 package ru.job4j.accident.model;
 
+import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+@Entity
+@Table(name = "accident")
 public class Accident {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
+    @ManyToOne(fetch = FetchType.EAGER)
     private AccidentType type;
 
-    private Set<Rule> rules;
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH, CascadeType.REFRESH})
+    @JoinTable(name = "accident_rules",
+            joinColumns = @JoinColumn(name = "accident_id"),
+            inverseJoinColumns = @JoinColumn(name = "rule_id")
+    )
+    private Set<Rule> rules = new HashSet<>();
 
-    public Accident(int id, String name, AccidentType accidentType, Set<Rule> rules) {
-        this.id = id;
-        this.name = name;
-        this.type = accidentType;
-        this.rules = rules;
+    public static Accident of(String name, AccidentType type) {
+        Accident accident = new Accident();
+        accident.setName(name);
+        accident.setType(type);
+        return accident;
     }
 
-    public Accident(String name, AccidentType accidentType, Set<Rule> rules) {
-        this.name = name;
-        this.type = accidentType;
-        this.rules = rules;
-    }
-
-    public Accident() {
+    public static Accident of(int id, String name, AccidentType type) {
+        Accident accident = new Accident();
+        accident.setId(id);
+        accident.setName(name);
+        accident.setType(type);
+        return accident;
     }
 
     public int getId() {
@@ -68,14 +79,11 @@ public class Accident {
             return false;
         }
         Accident accident = (Accident) o;
-        return id == accident.id
-                && Objects.equals(name, accident.name)
-                && Objects.equals(type, accident.type)
-                && Objects.equals(rules, accident.rules);
+        return id == accident.id;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, type, rules);
+        return Objects.hash(id);
     }
 }

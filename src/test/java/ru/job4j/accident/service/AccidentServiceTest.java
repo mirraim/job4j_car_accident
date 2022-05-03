@@ -12,9 +12,6 @@ import ru.job4j.accident.repository.mem.AccidentMem;
 import ru.job4j.accident.repository.mem.AccidentTypeMem;
 import ru.job4j.accident.repository.mem.RuleMem;
 
-import java.util.Set;
-
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -35,9 +32,10 @@ class AccidentServiceTest {
     void whenId0ThenCallCreateMethod() {
         AccidentType type = AccidentType.of(1, "type1");
         Rule rule = Rule.of(1, "Статья 1");
-        Accident accident = new Accident("accident1",  type, Set.of(rule));
+        Accident accident = Accident.of("accident1",  type);
+        accident.getRules().add(rule);
         when(types.getType(1)).thenReturn(type);
-        when(rules.getRule(any())).thenReturn(rule);
+        when(rules.getRule(1)).thenReturn(rule);
         when(accidentStorage.create(accident)).thenReturn(null);
 
         accidentService.save(accident, new String[]{"1"});
@@ -49,9 +47,10 @@ class AccidentServiceTest {
     void whenIdNon0ThenCallUpdateMethod() {
         AccidentType type = AccidentType.of(1, "type1");
         Rule rule = Rule.of(1, "Статья 1");
-        Accident accident = new Accident(1, "accident1",  type, Set.of(rule));
+        Accident accident = Accident.of(1, "accident1",  type);
+        accident.getRules().add(rule);
         when(types.getType(1)).thenReturn(type);
-        when(rules.getRule(any())).thenReturn(rule);
+        when(rules.getRule(1)).thenReturn(rule);
         when(accidentStorage.update(accident)).thenReturn(null);
 
         accidentService.save(accident, new String[]{"1"});

@@ -13,7 +13,7 @@ public class Rule {
     private int id;
     private String name;
 
-    @ManyToMany(mappedBy = "rules", fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "rules", fetch = FetchType.LAZY)
     private Set<Accident> accidents;
 
     public static Rule of(int id, String name) {

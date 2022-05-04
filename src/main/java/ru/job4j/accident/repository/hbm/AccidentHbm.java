@@ -23,7 +23,7 @@ public class AccidentHbm implements AccidentRepository {
     public Collection<Accident> getAccidents() {
         try (Session session = sf.openSession()) {
             return session
-                    .createQuery("from Accident", Accident.class)
+                    .createQuery("from Accident ac join fetch ac.type join fetch ac.rules", Accident.class)
                     .list();
         }
     }
@@ -51,8 +51,10 @@ public class AccidentHbm implements AccidentRepository {
     @Override
     public Accident getById(int id) {
         try (Session session = sf.openSession()) {
-            return session
-                    .get(Accident.class, id);
+            return session.createQuery(
+                    "from Accident ac join fetch ac.type join fetch ac.rules where ac.id = :accidentId", Accident.class)
+                    .setParameter("accidentId", id)
+                    .getSingleResult();
         }
     }
 }
